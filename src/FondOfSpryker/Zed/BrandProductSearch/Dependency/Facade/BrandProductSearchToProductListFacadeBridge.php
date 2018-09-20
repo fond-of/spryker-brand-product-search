@@ -2,7 +2,7 @@
 
 namespace FondOfSpryker\Zed\BrandProductSearch\Dependency\Facade;
 
-use Generated\Shared\Transfer\BrandTransfer;
+use Generated\Shared\Transfer\BrandCollectionTransfer;
 
 class BrandProductSearchToProductListFacadeBridge implements BrandProductSearchToBrandProductFacadeInterface
 {
@@ -22,10 +22,10 @@ class BrandProductSearchToProductListFacadeBridge implements BrandProductSearchT
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\BrandTransfer|null
+     * @return \Generated\Shared\Transfer\BrandCollectionTransfer
      */
-    public function getBrandByProductAbstractId(int $idProductAbstract): ?BrandTransfer
+    public function getBrandsByProductAbstractId(int $idProductAbstract): BrandCollectionTransfer
     {
-        return $this->brandProductFacade->getBrandByProductAbstractId($idProductAbstract);
+        return $this->brandProductFacade->getBrandsByProductAbstractId($idProductAbstract);
     }
 }

@@ -2,7 +2,8 @@
 
 namespace FondOfSpryker\Zed\BrandProductSearch\Communication\Plugin\ProductPageSearch;
 
-use Generated\Shared\Transfer\BrandTransfer;
+use Exception;
+use Generated\Shared\Transfer\BrandProductSearchTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -10,12 +11,11 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterf
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
 /**
- * @method \FondOfSpryker\Zed\BrandProductSearch\Business\BrandProductSearchFacadeInterface getFacade()
  * @method \FondOfSpryker\Zed\BrandProductSearch\Communication\BrandProductSearchCommunicationFactory getFactory()
  */
 class BrandProductMapExpanderPlugin extends AbstractPlugin implements ProductPageMapExpanderInterface
 {
-    protected const KEY_PRODUCT_BRAND = 'product_brand';
+    protected const KEY_PRODUCT_BRAND = 'product_brands';
 
     /**
      * {@inheritdoc}
@@ -34,8 +34,13 @@ class BrandProductMapExpanderPlugin extends AbstractPlugin implements ProductPag
         if (!isset($productData[static::KEY_PRODUCT_BRAND])) {
             return $pageMapTransfer;
         }
-        $brandTransfer = $this->getBrandProductSearchData($productData);
-        $pageMapTransfer->setProductBrand($brandTransfer);
+
+        throw new Exception(\json_encode($productData));
+        die('s');
+
+
+        $transfer = $this->getBrandProductSearchData($productData);
+        $pageMapTransfer->setProductBrands($transfer);
 
         return $pageMapTransfer;
     }
@@ -43,13 +48,13 @@ class BrandProductMapExpanderPlugin extends AbstractPlugin implements ProductPag
     /**
      * @param array $productData
      *
-     * @return \Generated\Shared\Transfer\BrandTransfer
+     * @return \Generated\Shared\Transfer\BrandProductSearchTransfer
      */
-    protected function getBrandProductSearchData(array $productData): BrandTransfer
+    protected function getBrandProductSearchData(array $productData): BrandProductSearchTransfer
     {
-        $brandTransfer = new BrandTransfer();
-        $brandTransfer->fromArray($productData[static::KEY_PRODUCT_BRAND]);
+        $transfer = new BrandProductSearchTransfer();
+        $transfer->fromArray($productData[static::KEY_PRODUCT_BRAND]);
 
-        return $brandTransfer;
+        return $transfer;
     }
 }

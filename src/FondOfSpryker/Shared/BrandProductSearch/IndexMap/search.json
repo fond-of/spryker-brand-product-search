@@ -1,0 +1,17 @@
+{
+  "mappings": {
+    "page": {
+      "properties": {
+        "product-brands": {
+          "type": "object",
+          "include_in_all": false,
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

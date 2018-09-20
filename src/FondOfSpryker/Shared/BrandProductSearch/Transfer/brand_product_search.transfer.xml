@@ -3,12 +3,16 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="BrandProductSearch">
+        <property name="names" type="string[]"/>
+    </transfer>
+
     <transfer name="PageMap">
-        <property name="productBrand" type="BrandTransfer" />
+        <property name="productBrands" type="BrandProductSearch" />
     </transfer>
 
     <transfer name="ProductPageSearch">
-        <property name="productBrand" type="BrandTransfer"/>
+        <property name="productBrands" type="BrandProductSearch"/>
     </transfer>
 
 </transfers>

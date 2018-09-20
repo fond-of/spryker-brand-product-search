@@ -2,13 +2,14 @@
 
 namespace FondOfSpryker\Zed\BrandProductSearch\Communication\Plugin\ProductPageSearch;
 
+use Generated\Shared\Transfer\BrandCollectionTransfer;
+use Generated\Shared\Transfer\BrandProductSearchTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface;
 
 /**
  * @method \FondOfSpryker\Zed\BrandProductSearch\Communication\BrandProductSearchCommunicationFactory getFactory()
- * @method \FondOfSpryker\Zed\BrandProductSearch\Business\BrandProductSearchFacadeInterface getFacade()
  */
 class BrandProductDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
@@ -27,13 +28,33 @@ class BrandProductDataExpanderPlugin extends AbstractPlugin implements ProductPa
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer): void
     {
         $idProductAbstract = $this->getIdProductAbstract($productData);
-        $brand = $this->getFactory()->getBrandProductFacade()->getBrandByProductAbstractId($idProductAbstract);
+        $brandsCollection = $this->getFactory()->getBrandProductFacade()->getBrandsByProductAbstractId($idProductAbstract);
 
-        $productAbstractPageSearchTransfer->setProductBrand(null);
+        $brandNames = $this->getBrandNames($brandsCollection);
 
-        if ($brand !== null) {
-            $productAbstractPageSearchTransfer->setProductBrand($brand);
+        $names = new BrandProductSearchTransfer();
+        $names->setNames($brandNames);
+
+        $productAbstractPageSearchTransfer->setProductBrands($names);
+    }
+
+    /**
+     * Get brand names
+     *
+     * @param \Generated\Shared\Transfer\BrandCollectionTransfer $brandsCollection
+     *
+     * @return array
+     */
+    protected function getBrandNames(BrandCollectionTransfer $brandsCollection): array
+    {
+        $names = [];
+
+        foreach ($brandsCollection->getBrands() as $brandTransfer) {
+            /** @var \Generated\Shared\Transfer\BrandTransfer $brandTransfer */
+            $names[] = $brandTransfer->getName();
         }
+
+        return $names;
     }
 
     /**

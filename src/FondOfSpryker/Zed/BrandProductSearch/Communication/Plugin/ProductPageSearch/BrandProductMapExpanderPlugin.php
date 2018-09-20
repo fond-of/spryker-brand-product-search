@@ -2,7 +2,6 @@
 
 namespace FondOfSpryker\Zed\BrandProductSearch\Communication\Plugin\ProductPageSearch;
 
-use Exception;
 use Generated\Shared\Transfer\BrandProductSearchTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
@@ -34,10 +33,6 @@ class BrandProductMapExpanderPlugin extends AbstractPlugin implements ProductPag
         if (!isset($productData[static::KEY_PRODUCT_BRAND])) {
             return $pageMapTransfer;
         }
-
-        throw new Exception(\json_encode($productData));
-        die('s');
-
 
         $transfer = $this->getBrandProductSearchData($productData);
         $pageMapTransfer->setProductBrands($transfer);

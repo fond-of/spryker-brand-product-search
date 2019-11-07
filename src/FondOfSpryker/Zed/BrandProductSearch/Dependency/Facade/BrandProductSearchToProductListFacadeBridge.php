@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\BrandProductSearch\Dependency\Facade;
 
+use FondOfSpryker\Zed\BrandProduct\Business\BrandProductFacadeInterface;
 use Generated\Shared\Transfer\BrandCollectionTransfer;
 
 class BrandProductSearchToProductListFacadeBridge implements BrandProductSearchToBrandProductFacadeInterface
@@ -14,7 +15,7 @@ class BrandProductSearchToProductListFacadeBridge implements BrandProductSearchT
     /**
      * @param \FondOfSpryker\Zed\BrandProduct\Business\BrandProductFacadeInterface $brandProductFacade
      */
-    public function __construct($brandProductFacade)
+    public function __construct(BrandProductFacadeInterface $brandProductFacade)
     {
         $this->brandProductFacade = $brandProductFacade;
     }

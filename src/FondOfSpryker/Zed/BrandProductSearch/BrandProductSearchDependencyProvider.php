@@ -30,7 +30,7 @@ class BrandProductSearchDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addBrandProductFacade(Container $container): Container
     {
-        $container[static::FACADE_BRAND_PRODUCT] = function (Container $container) {
+        $container[static::FACADE_BRAND_PRODUCT] = static function (Container $container) {
             return new BrandProductSearchToProductListFacadeBridge($container->getLocator()->brandProduct()->facade());
         };
 

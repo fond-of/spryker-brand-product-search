@@ -1,3 +1,5 @@
+namespace: fond-of-spryker/brand-product-search
+
 suites:
   unit:
     path: .

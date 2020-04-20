@@ -1,47 +1,41 @@
 <?php
 
-namespace FondOfSpryker\Zed\BrandProductSearch\Communication\Plugin\ProductPageSearch;
+namespace FondOfSpryker\Zed\BrandProductSearch\Communication\Plugin\ProductPageSearchExtension;
 
 use Generated\Shared\Transfer\BrandProductSearchTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface;
 
 /**
- * @method \FondOfSpryker\Zed\BrandProductSearch\Communication\BrandProductSearchCommunicationFactory getFactory()
  * @method \FondOfSpryker\Zed\BrandProductSearch\BrandProductSearchConfig getConfig()
+ * @method \FondOfSpryker\Zed\BrandProductSearch\Communication\BrandProductSearchCommunicationFactory getFactory()
  */
-class BrandProductMapExpanderPlugin extends AbstractPlugin implements ProductPageMapExpanderInterface
+class BrandProductMapExpanderPlugin extends AbstractPlugin implements ProductAbstractMapExpanderPluginInterface
 {
     protected const KEY_PRODUCT_BRAND = 'product_brands';
 
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
      * @param array $productData
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Generated\Shared\Transfer\PageMapTransfer
+     * @return void
      */
-    public function expandProductPageMap(
+    public function expandProductMap(
         PageMapTransfer $pageMapTransfer,
         PageMapBuilderInterface $pageMapBuilder,
         array $productData,
         LocaleTransfer $localeTransfer
-    ): PageMapTransfer {
+    ): void {
         if (!isset($productData[static::KEY_PRODUCT_BRAND])) {
-            return $pageMapTransfer;
+            return;
         }
 
         $transfer = (new BrandProductSearchTransfer())->fromArray($productData[static::KEY_PRODUCT_BRAND]);
         $pageMapTransfer->setProductBrands($transfer);
-
-        return $pageMapTransfer;
     }
 }

@@ -1,3 +1,5 @@
+namespace: fond-of-spryker/brand-product-search
+
 suites:
   unit:
     path: .
@@ -16,7 +18,7 @@ paths:
 coverage:
   enabled: true
   include:
-    - src/FondOfSpryker/*.php
+    - src/*.php
 
 modules:
   enabled:

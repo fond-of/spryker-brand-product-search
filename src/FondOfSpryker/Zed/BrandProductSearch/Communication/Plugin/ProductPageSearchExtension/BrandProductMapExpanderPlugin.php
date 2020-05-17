@@ -23,19 +23,20 @@ class BrandProductMapExpanderPlugin extends AbstractPlugin implements ProductAbs
      * @param array $productData
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PageMapTransfer
      */
     public function expandProductMap(
         PageMapTransfer $pageMapTransfer,
         PageMapBuilderInterface $pageMapBuilder,
         array $productData,
         LocaleTransfer $localeTransfer
-    ): void {
+    ): PageMapTransfer {
         if (!isset($productData[static::KEY_PRODUCT_BRAND])) {
-            return;
+            return $pageMapTransfer;
         }
 
         $transfer = (new BrandProductSearchTransfer())->fromArray($productData[static::KEY_PRODUCT_BRAND]);
-        $pageMapTransfer->setProductBrands($transfer);
+
+        return $pageMapTransfer->setProductBrands($transfer);
     }
 }

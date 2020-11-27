@@ -4,10 +4,9 @@
       "properties": {
         "product-brands": {
           "type": "object",
-          "include_in_all": false,
           "properties": {
-            "name": {
-              "type": "string"
+            "names": {
+              "type": "keyword"
             }
           }
         }

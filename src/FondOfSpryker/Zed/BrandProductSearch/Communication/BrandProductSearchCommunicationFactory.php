@@ -12,8 +12,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class BrandProductSearchCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\BrandProductSearch\Dependency\Facade\BrandProductSearchToBrandProductFacadeInterface
      */
     public function getBrandProductFacade(): BrandProductSearchToBrandProductFacadeInterface

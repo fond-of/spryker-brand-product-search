@@ -1,16 +1,17 @@
 <?php
 
-namespace FondOfSpryker\Zed\BrandProductSearch\Communication\Plugin\ProductPageSearch;
+namespace FondOfSpryker\Zed\BrandProductSearch\Communication\Plugin\ProductPageSearchExtension;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\BrandProductSearchTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
 class BrandProductMapExpanderPluginTest extends Unit
 {
     /**
-     * @var \FondOfSpryker\Zed\BrandProductSearch\Communication\Plugin\ProductPageSearch\BrandProductMapExpanderPlugin
+     * @var \FondOfSpryker\Zed\BrandProductSearch\Communication\Plugin\ProductPageSearchExtension\BrandProductMapExpanderPlugin
      */
     protected $brandProductMapExpanderPlugin;
 
@@ -20,7 +21,7 @@ class BrandProductMapExpanderPluginTest extends Unit
     protected $pageMapTransferMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface
      */
     protected $pageMapBuilderInterfaceMock;
 
@@ -63,26 +64,36 @@ class BrandProductMapExpanderPluginTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductPageMap(): void
+    public function testExpandProductMap(): void
     {
-        $this->assertInstanceOf(PageMapTransfer::class, $this->brandProductMapExpanderPlugin->expandProductPageMap(
+        $this->pageMapTransferMock->expects($this->atLeastOnce())
+            ->method('setProductBrands')
+            ->with($this->isInstanceOf(BrandProductSearchTransfer::class))
+            ->willReturn($this->pageMapTransferMock);
+
+        $this->brandProductMapExpanderPlugin->expandProductMap(
             $this->pageMapTransferMock,
             $this->pageMapBuilderInterfaceMock,
             $this->productData,
             $this->localeTransferMock
-        ));
+        );
     }
 
     /**
      * @return void
      */
-    public function testExpandProductPageMapNoProductBrand(): void
+    public function testExpandProductMapNoProductBrand(): void
     {
-        $this->assertInstanceOf(PageMapTransfer::class, $this->brandProductMapExpanderPlugin->expandProductPageMap(
+        $this->pageMapTransferMock->expects($this->never())
+            ->method('setProductBrands')
+            ->with($this->isInstanceOf(BrandProductSearchTransfer::class))
+            ->willReturn($this->pageMapTransferMock);
+
+        $this->brandProductMapExpanderPlugin->expandProductMap(
             $this->pageMapTransferMock,
             $this->pageMapBuilderInterfaceMock,
             [],
             $this->localeTransferMock
-        ));
+        );
     }
 }

@@ -10,13 +10,14 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
 
 /**
  * @method \FondOfSpryker\Zed\BrandProductSearch\Communication\BrandProductSearchCommunicationFactory getFactory()
+ * @method \FondOfSpryker\Zed\BrandProductSearch\BrandProductSearchConfig getConfig()
  */
 class BrandProductDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
     protected const KEY_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
